@@ -1,0 +1,51 @@
+-- Создание базы данных
+CREATE DATABASE dormitory;
+
+-- Использование базы данных
+USE dormitory;
+
+-- Таблица комнат
+CREATE TABLE room (
+                      room_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор комнаты
+                      room_number INT NOT NULL, -- Номер комнаты
+                      total_places INT NOT NULL, -- Общее количество мест
+                      free_places INT NOT NULL, -- Количество свободных мест
+                      room_condition VARCHAR(255) NOT NULL, -- Состояние комнаты (например, "Отремонтирована", "Требует ремонта")
+                      floor INT NOT NULL, -- Этаж комнаты
+                      available BOOLEAN NOT NULL DEFAULT false -- Доступность комнаты (с новым названием столбца)
+);
+
+-- Таблица студентов
+CREATE TABLE student (
+                          student_id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор студента
+                          first_name VARCHAR(255) NOT NULL, -- Имя студента
+                          last_name VARCHAR(255) NOT NULL, -- Фамилия студента
+                          email VARCHAR(255) NOT NULL UNIQUE, -- Email студента
+                          phone_number VARCHAR(20) NOT NULL, -- Телефонный номер
+                          checkin_date DATE NOT NULL, -- Дата заселения
+                          checkout_date DATE NOT NULL, -- Дата выселения
+                          room_id BIGINT, -- Связь с комнатой
+                          FOREIGN KEY (room_id) REFERENCES room(room_id) ON DELETE SET NULL
+);
+
+-- Таблица ролей
+CREATE TABLE roles (
+                       id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор роли
+                       name VARCHAR(255) NOT NULL UNIQUE -- Имя роли (например, "ROLE_ADMIN", "ROLE_USER")
+);
+
+-- Таблица пользователей
+CREATE TABLE users (
+                       id BIGINT PRIMARY KEY AUTO_INCREMENT, -- Уникальный идентификатор пользователя
+                       username VARCHAR(255) NOT NULL UNIQUE, -- Имя пользователя
+                       password VARCHAR(255) NOT NULL -- Хэш пароля
+);
+
+-- Таблица связывающая пользователей и роли
+CREATE TABLE users_roles (
+                             user_id BIGINT NOT NULL, -- Связь с пользователем
+                             role_id BIGINT NOT NULL, -- Связь с ролью
+                             PRIMARY KEY (user_id, role_id),
+                             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+                             FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);

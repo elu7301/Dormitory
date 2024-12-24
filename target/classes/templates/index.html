@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Общежитие</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f8fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: #34495e;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            height: 65px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+        }
+
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            margin: 100px auto;
+        }
+
+        h1 {
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            border-radius: 50px;
+            font-size: 1rem;
+            margin: 5px;
+        }
+
+        .central-button {
+            border-radius: 50px;
+            margin: 10px 0;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .central-button:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+            border-color: #7f8c8d;
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-success:hover {
+            background-color: #218c54;
+            border-color: #218c54;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-info:hover {
+            background-color: #2c3e50;
+            border-color: #2c3e50;
+            box-shadow: 0 4px 15px rgba(52, 73, 94, 0.3);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Главная страница</a>
+        <div class="d-flex">
+            <a th:href="@{/admin/users}" class="btn btn-outline-light me-2" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Управление пользователями</a>
+            <a th:href="@{/logout}" class="btn btn-outline-light">Выйти</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1>Информационно-справочная система общежития</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <a href="/students">
+                <button type="button" class="btn btn-primary central-button">Информация о студентах</button>
+            </a>
+            <a href="/rooms">
+                <button type="button" class="btn btn-secondary central-button">Информация о комнатах</button>
+            </a>
+            <a href="/statistics">
+                <button type="button" class="btn btn-success central-button">Статистика</button>
+            </a>
+            <a href="/about_author">
+                <button type="button" class="btn btn-info central-button">Об авторе</button>
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
